@@ -65,4 +65,11 @@ public class Option {
     public void setProduct(Product product) {
         this.product = product;
     }
+
+    public void subtractQuantity(int quantity) {
+        if (this.quantity < quantity) {
+            throw new IllegalArgumentException("Option quantity cannot be less than 0.");
+        }
+        this.quantity -= quantity;
+    }
 }
