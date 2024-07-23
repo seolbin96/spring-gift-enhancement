@@ -42,4 +42,14 @@ public class OptionService {
         optionRepository.save(option);
         return new OptionDTO(option);
     }
+
+    public void subtractOptionQuantity(Long productId, String optionName, int quantity) {
+        Option option = optionRepository.findByProductId(productId).stream()
+                .filter(opt -> opt.getName().equals(optionName))
+                .findFirst()
+                .orElseThrow(() -> new IllegalArgumentException("Option not found for product Id:" + productId));
+
+        option.subtractQuantity(quantity);
+        optionRepository.save(option);
+    }
 }
