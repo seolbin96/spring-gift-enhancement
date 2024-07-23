@@ -1,6 +1,6 @@
 # spring-gift-enhancement
 
-### 4주차 step0
+### 4주차 step1
 
 ---
 ## 할 일
@@ -22,7 +22,7 @@
 
 ---
 
-### 4주차 step1
+### 4주차 step2
 
 ---
 ## 할 일
@@ -37,3 +37,13 @@
    - 상품에 옵션 추가
    - 상품의 옵션 조회
    - 상품 옵션 삭제
+
+---
+
+### 4주차 step3
+
+---
+## 할 일
+1. Option 엔티티에 subtractQuantity 메서드 추가
+2. OptionService에 subtractOptionQuantity 메서드 추가
+3. OptionServiceTest에 단위 테스트 작성
