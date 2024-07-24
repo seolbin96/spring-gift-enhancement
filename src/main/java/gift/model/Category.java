@@ -1,5 +1,6 @@
 package gift.model;
 
+import gift.dto.CategoryDTO;
 import jakarta.persistence.*;
 
 @Entity
@@ -64,5 +65,12 @@ public class Category {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public void updateFromDTO(CategoryDTO categoryDTO) {
+        this.name = categoryDTO.getName();
+        this.color = categoryDTO.getColor();
+        this.imageUrl = categoryDTO.getImageUrl();
+        this.description = categoryDTO.getDescription();
     }
 }
