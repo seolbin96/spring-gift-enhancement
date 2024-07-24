@@ -7,12 +7,13 @@ import gift.repository.OptionRepository;
 import gift.repository.ProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 public class OptionService {
+
     private final OptionRepository optionRepository;
     private final ProductRepository productRepository;
 
@@ -22,12 +23,7 @@ public class OptionService {
         this.productRepository = productRepository;
     }
 
-    public List<OptionDTO> getOptionsByProductId(Long productId) {
-        return optionRepository.findByProductId(productId).stream()
-                .map(OptionDTO::new)
-                .collect(Collectors.toList());
-    }
-
+    @Transactional
     public OptionDTO addOptionToProduct(Long productId, OptionDTO optionDTO) {
         Product product = productRepository.findById(productId)
                 .orElseThrow(() -> new IllegalArgumentException("Invalid product Id:" + productId));
@@ -43,13 +39,7 @@ public class OptionService {
         return new OptionDTO(option);
     }
 
-    public void subtractOptionQuantity(Long productId, String optionName, int quantity) {
-        Option option = optionRepository.findByProductId(productId).stream()
-                .filter(opt -> opt.getName().equals(optionName))
-                .findFirst()
-                .orElseThrow(() -> new IllegalArgumentException("Option not found for product Id:" + productId));
-
-        option.subtractQuantity(quantity);
-        optionRepository.save(option);
+    public List<OptionDTO> getOptionsByProductId(Long productId) {
+        return optionRepository.findByProductId(productId).stream().map(OptionDTO::new).toList();
     }
 }
