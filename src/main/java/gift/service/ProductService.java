@@ -43,7 +43,13 @@ public class ProductService {
         return new ProductDTO(product);
     }
 
+    @Transactional
     public void saveProduct(ProductDTO productDTO) {
+        // 상품 이름에 '카카오'가 포함되어 있으면 예외 발생
+        if (productDTO.getName().contains("카카오")) {
+            throw new IllegalArgumentException("상품 이름에 '카카오'가 포함되어 있습니다. 담당 MD와 협의하세요.");
+        }
+
         CategoryDTO categoryDTO = productDTO.getCategory();
         if (categoryDTO == null || categoryDTO.getName() == null) {
             throw new IllegalArgumentException("Category must not be null");
@@ -68,8 +74,15 @@ public class ProductService {
         productRepository.save(product);
     }
 
+    @Transactional
     public void updateProduct(Long id, ProductDTO productDTO) {
         Product product = productRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("Invalid product Id:" + id));
+
+        // 상품 이름에 '카카오'가 포함되어 있으면 예외 발생
+        if (productDTO.getName().contains("카카오")) {
+            throw new IllegalArgumentException("상품 이름에 '카카오'가 포함되어 있습니다. 담당 MD와 협의하세요.");
+        }
+
         Category category = categoryRepository.findByName(productDTO.getCategory().getName());
         product.setName(productDTO.getName());
         product.setPrice(productDTO.getPrice());
