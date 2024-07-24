@@ -4,10 +4,11 @@ import gift.dto.CategoryDTO;
 import gift.model.Category;
 import gift.repository.CategoryRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
-import org.springframework.stereotype.Service;
 
 @Service
 public class CategoryService {
@@ -30,12 +31,10 @@ public class CategoryService {
         categoryRepository.save(category);
     }
 
+    @Transactional
     public void update(Long id, CategoryDTO categoryDTO) {
         Category category = categoryRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("Invalid category Id:" + id));
-        category.setName(categoryDTO.getName());
-        category.setColor(categoryDTO.getColor());
-        category.setImageUrl(categoryDTO.getImageUrl());
-        category.setDescription(categoryDTO.getDescription());
+        category.updateFromDTO(categoryDTO);
         categoryRepository.save(category);
     }
 
